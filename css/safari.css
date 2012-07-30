@@ -1,0 +1,16 @@
+.safari .existing a {
+    position: relative;
+    top: -6px;
+}
+
+.home, .profile, .settings, .logo, #kippt-actions .toggle {
+    background-image:url(../img/extension-sprite.png);
+}
+
+#kippt-header, #kippt-actions {
+    background:url(../img/extension-header-bg.png) repeat-x #f6f6f6;
+}
+
+#kippt-actions .toggle {
+    background:url(../img/extension-sprite.png) no-repeat; 
+}

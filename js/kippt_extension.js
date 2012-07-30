@@ -13,11 +13,63 @@ jQuery(function() {
   };
 
   Kippt.updateLists = function(data) {
-    $("#id_list").html("");
-    $.each(data, function() {
-      $("#id_list").append(new Option(this.title, this.id, true, true));
+    $('#id_list').html('');
+    for (var i in data) {
+      var list = data[i];
+      $('#id_list').append(new Option(list['title'], list['id'], true, true));
+    }
+    $('#id_list option').first().attr('selected', 'selected');
+
+    $('#id_list').append('<option id="new-list-toggle">-- New list --</option>');
+    $('#id_list').on('change', function(){
+      if ($(this).children("option#new-list-toggle:selected").length) {
+        $('#id_list').hide();
+        $('#new_list').css('display', 'inline-block');
+        $('#id_new_list').focus();
+      }
     });
-    $("#id_list option").first().attr("selected", "selected");
+  };
+  
+  Kippt.clearUI = function() {
+    $("#id_title").val("");
+    $("#id_notes").val("");
+    $("#id_is_read_later").removeAttr("checked");
+    $("#id_list").show();
+    $("#new_list").hide();
+    $('#id_new_list').val("");
+    $('#id_private').removeAttr("checked");
+  };
+  
+  Kippt.postClip = function(msg) {
+    var type;
+    if (!msg.id) {
+      // Create new
+      type = 'POST'
+      url = 'https://kippt.com/api/clips/';
+    } else {
+      // Update
+      type = 'PUT'
+      url = 'https://kippt.com/api/clips/'+msg.id+'/'
+    }
+    
+    console.log(type)
+    console.log(msg)
+
+    var request = $.ajax({
+      url: url,
+      type: type,
+      dataType: 'json',
+      data: JSON.stringify(msg)
+    })
+    .done(function(){
+      // Clear page cache
+      Kippt.clearUI();
+      localStorage.removeItem('cache-title');
+      localStorage.removeItem('cache-notes');
+    })
+    .fail(function(jqXHR, textStatus){
+      alert( "Something went wrong when saving. Try again or contact hello@kippt.com");
+    });
   };
 
   Kippt.spinnerOptions = {
@@ -41,6 +93,7 @@ jQuery(function() {
 
   Kippt.popoverHandler = function() {
     Kippt.existingClip = {};
+    Kippt.updateExisting = false;
 
     $(".existing a").hide();
     $(".existing").show();
@@ -59,7 +112,7 @@ jQuery(function() {
     // Clear fields if not on the same page anymore
     if (tab.url !== Kippt.previousUrl) {
       $("#id_title").val(tab.title.trim());
-      $("#id_notes").val("");
+      Kippt.updateExisting = false;
       Kippt.previousUrl = tab.url;
     }
 
@@ -116,6 +169,9 @@ jQuery(function() {
   // Edit existing clip
   $(document).on("click", ".existing a", function(event) {
     event.preventDefault();
+    Kippt.clearUI();
+    console.log('existing')
+    Kippt.updateExisting = true;
     $("#id_title").val(Kippt.existingClip.title);
     $("#id_notes").val(Kippt.existingClip.notes);
     $("#id_list option[value="+Kippt.existingClip.list.id+"]").attr("selected", "selected");
@@ -129,7 +185,6 @@ jQuery(function() {
     });
 
     var data = {
-      id: Kippt.existingClip.id,
       url: Kippt.url,
       title: $("#id_title").val(),
       notes: $("#id_notes").val(),
@@ -137,11 +192,43 @@ jQuery(function() {
       source: "safari_v1.0",
       share: services
     };
+    
+    if (Kippt.updateExisting) {
+      console.log('haz existing')
+      data.id = Kippt.existingClip.id;
+    }
 
-    console.log(data);
+    // New list
+    if ($('#id_new_list').val()) {
+      data['new_list'] = {};
+      data['new_list']['title'] = $('#id_new_list').val()
+      if ($('#id_private').is(':checked'))
+        data['new_list'].is_private = true
+      else
+        data['new_list'].is_private = false
+    }
 
-    $.post("https://kippt.com/api/clips/", JSON.stringify(data));
-
+    
+    if (data['new_list']) {
+      $.ajax({
+        url: 'https://kippt.com/api/lists/',
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data['new_list'])
+      })
+      .done(function(data){
+        // Create clip with new list
+        data['list'] = data.id;
+        Kippt.postClip(data);
+      })
+      .fail(function(){
+        alert( "Something went wrong when saving. Try again or contact hello@kippt.com");
+      });
+    } else {
+      // Create clip with existing list
+      Kippt.postClip(data);
+    }
+    
     Kippt.closePopover();
   });
 

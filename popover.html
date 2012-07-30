@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="css/extension.css">
+    <link rel="stylesheet" type="text/css" href="css/safari.css">
     <link rel="stylesheet" type="text/css" href="css/tipsy.css">
     <script type="text/javascript" src="js/vendor/jquery.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/vendor/spin.js" charset="utf-8"></script>
@@ -8,15 +9,15 @@
     <script type="text/javascript" src="js/kippt_extension.js" charset="utf-8"></script>
 </head>
 <body>
-    <div id="kippt-frame">
+    <div id="kippt-frame" class="safari">
         <div id="kippt-header">
             <a href="https://kippt.com" title="Open Kippt" target="_blank" class="logo"></a>
             <div class="existing">
                 <div class="loading"></div>
                 <a href="#">Modify existing clip</a>
             </div>
-            <a href="#" id="open-inbox" title="Open Inbox" class="home"></a>
-            <a href="#" id="open-profile" title="Open Profile" class="profile"></a>
+            <a href="https://kippt.com/profile/" title="Your Kippt profile" target="_blank" class="profile"></a>
+            <a href="https://kippt.com/inbox/" title="Open Inbox" target="_blank" class="home"></a>
         </div>
 
         <div>
@@ -30,10 +31,13 @@
             <select class="lists" id="id_list">
                 <option value="inbox">Inbox</option>
             </select>
-            <input type="text" placeholder="New list" id="id_new_list" name="new_list" />
-            <!--<div class="kippt-later">
-                <input type="checkbox" id="read-later"><label for="read-later">Read Later</label>
-            </div>-->
+            <div id="new_list">
+                <input type="text" placeholder="New list name" id="id_new_list" name="new_list" />
+                <input type="checkbox" id="id_private"><label for="id_private">Private</label>
+            </div>
+            <div class="kippt-later">
+                <input type="checkbox" id="id_is_read_later"><label for="id_is_read_later">Read Later</label>
+            </div>
         </div>
 
         <div id="kippt-actions">
