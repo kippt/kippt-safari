@@ -1,0 +1,74 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/extension.css">
+    <link rel="stylesheet" type="text/css" href="css/tipsy.css">
+    <script type="text/javascript" src="js/vendor/jquery.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/vendor/spin.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/vendor/tipsy.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/kippt_extension.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="kippt-frame">
+        <div id="kippt-header">
+            <a href="https://kippt.com" title="Open Kippt" target="_blank" class="logo"></a>
+            <div class="existing">
+                <div class="loading"></div>
+                <a href="#">Modify existing clip</a>
+            </div>
+            <a href="#" id="open-inbox" title="Open Inbox" class="home"></a>
+            <a href="#" id="open-profile" title="Open Profile" class="profile"></a>
+        </div>
+
+        <div>
+            <input id="id_title" type="text" name="title" maxlength="512" placeholder="Title" value="" />
+        </div>
+        <div>
+            <textarea id="id_notes" rows="10" cols="40" name="notes" placeholder="Enter notes and #tags here..."></textarea>
+        </div>
+
+        <div id="kippt-list">
+            <select class="lists" id="id_list">
+                <option value="inbox">Inbox</option>
+            </select>
+            <input type="text" placeholder="New list" id="id_new_list" name="new_list" />
+            <!--<div class="kippt-later">
+                <input type="checkbox" id="read-later"><label for="read-later">Read Later</label>
+            </div>-->
+        </div>
+
+        <div id="kippt-actions">
+            <div class="twitter" data-service-name="Twitter">
+                <input type="checkbox" class="share" id="share-twitter" data-service="twitter" />
+                <label for="share-twitter" class="toggle"></label>
+            </div>
+        
+            <div class="facebook" data-service-name="Facebook">
+                <input type="checkbox" class="share" id="share-facebook" data-service="facebook" />
+                <label for="share-facebook" class="toggle"></label>
+            </div>
+            
+            <div class="tumblr" data-service-name="Tumblr">
+                <input type="checkbox" class="share" id="share-tumblr" data-service="tumblr" />
+                <label for="share-tumblr" class="toggle"></label>
+            </div>
+            
+            <div class="instapaper" data-service-name="Instapaper">
+                <input type="checkbox" class="share" id="share-instapaper" data-service="instapaper" />
+                <label for="share-instapaper" class="toggle"></label>
+            </div>
+            
+            <div class="readability" data-service-name="Readability">
+                <input type="checkbox" class="share" id="share-readability" data-service="readability" />
+                <label for="share-readability" class="toggle"></label>
+            </div>
+            
+            <div class="pocket" data-service-name="Pocket">
+                <input type="checkbox" class="share" id="share-pocket" data-service="pocket" />
+                <label for="share-pocket" class="toggle"></label>
+            </div>
+            
+            <input type="submit" value="Save" id="submit_clip">
+        </div>
+    </div>
+</body>
+</html>
