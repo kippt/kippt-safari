@@ -119,14 +119,9 @@ jQuery(function() {
       Kippt.profilePath = data.app_url;
 
       $.each(data.services, function(name, connected) {
-        $("#kippt-actions ." + name).toggleClass("connected", connected);
-
-        var input = $("#kippt-actions ." + name + " input");
         if (connected) {
-          input.removeAttr("disabled");
-        }
-        else {
-          input.attr("disabled", "disabled");
+          $("#kippt-actions ." + name).toggleClass("connected", connected);
+          $("#kippt-actions ." + name).css('display', 'inline-block');
         }
       });
     })
