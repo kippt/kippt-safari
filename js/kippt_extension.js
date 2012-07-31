@@ -51,9 +51,6 @@ jQuery(function() {
       type = 'PUT'
       url = 'https://kippt.com/api/clips/'+msg.id+'/'
     }
-    
-    console.log(type)
-    console.log(msg)
 
     var request = $.ajax({
       url: url,
@@ -170,7 +167,6 @@ jQuery(function() {
   $(document).on("click", ".existing a", function(event) {
     event.preventDefault();
     Kippt.clearUI();
-    console.log('existing')
     Kippt.updateExisting = true;
     $("#id_title").val(Kippt.existingClip.title);
     $("#id_notes").val(Kippt.existingClip.notes);
