@@ -1,5 +1,11 @@
 jQuery(function() {
-  var Kippt = {};
+  var Kippt = {
+    userId: null
+  };
+  
+  // Load user data from cache
+  if (localStorage.getItem('kipptUserId'))
+    Kippt.userId = localStorage.getItem('kipptUserId');
 
   Kippt.closePopover = function() {
     setTimeout(function() {
@@ -15,8 +21,15 @@ jQuery(function() {
   Kippt.updateLists = function(data) {
     $('#id_list').html('');
     for (var i in data) {
-      var list = data[i];
-      $('#id_list').append(new Option(list['title'], list['id'], true, true));
+      var list = data[i], title;
+      
+      // Add user to title if not the current user
+      if (Kippt.userId && Kippt.userId != list['user']['id'])
+        title = list['title'] + ' (' + list['user']['username'] + ')';
+      else
+        title = list['title'];
+      
+      $('#id_list').append(new Option(title, list['id'], true, true));
     }
     $('#id_list option').first().attr('selected', 'selected');
 
@@ -117,6 +130,8 @@ jQuery(function() {
     $.getJSON("https://kippt.com/api/account/?include_data=services&disable_basic_auth=1")
     .done(function(data) {
       Kippt.profilePath = data.app_url;
+      Kippt.useriD = data['id'];
+      localStorage.setItem('kipptUserId', data['id']);
 
       $.each(data.services, function(name, connected) {
         if (connected) {
@@ -146,7 +161,7 @@ jQuery(function() {
     }
 
     // Fetch latest lists
-    $.getJSON("https://kippt.com/api/lists/?limit=0")
+    $.getJSON("https://kippt.com/api/lists/?limit=0&include_data=user")
     .done(function(data) {
       var lists = data.objects,
           listJSON = JSON.stringify(lists);
