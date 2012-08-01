@@ -4,8 +4,9 @@ jQuery(function() {
   };
   
   // Load user data from cache
-  if (localStorage.getItem('kipptUserId'))
+  if (localStorage.getItem('kipptUserId')) {
     Kippt.userId = localStorage.getItem('kipptUserId');
+  }
 
   Kippt.closePopover = function() {
     setTimeout(function() {
@@ -20,17 +21,21 @@ jQuery(function() {
 
   Kippt.updateLists = function(data) {
     $('#id_list').html('');
-    for (var i in data) {
-      var list = data[i], title;
+
+    $.each(data, function(i, list) {
+      var title;
       
       // Add user to title if not the current user
-      if (Kippt.userId && Kippt.userId != list['user']['id'])
-        title = list['title'] + ' (' + list['user']['username'] + ')';
-      else
-        title = list['title'];
+      if (Kippt.userId && Kippt.userId !== list.user.id) {
+        title = list.title + ' (' + list.user.username + ')';
+      }
+      else {
+        title = list.title;
+      }
       
-      $('#id_list').append(new Option(title, list['id'], true, true));
-    }
+      $('#id_list').append(new Option(title, list.id, true, true));
+    });
+
     $('#id_list option').first().attr('selected', 'selected');
 
     $('#id_list').append('<option id="new-list-toggle">-- New list --</option>');
@@ -57,12 +62,12 @@ jQuery(function() {
     var type;
     if (!msg.id) {
       // Create new
-      type = 'POST'
+      type = 'POST';
       url = 'https://kippt.com/api/clips/';
     } else {
       // Update
-      type = 'PUT'
-      url = 'https://kippt.com/api/clips/'+msg.id+'/'
+      type = 'PUT';
+      url = 'https://kippt.com/api/clips/'+msg.id+'/';
     }
 
     var request = $.ajax({
@@ -130,8 +135,8 @@ jQuery(function() {
     $.getJSON("https://kippt.com/api/account/?include_data=services&disable_basic_auth=1")
     .done(function(data) {
       Kippt.profilePath = data.app_url;
-      Kippt.useriD = data['id'];
-      localStorage.setItem('kipptUserId', data['id']);
+      Kippt.useriD = data.id;
+      localStorage.setItem('kipptUserId', data.id);
 
       $.each(data.services, function(name, connected) {
         if (connected) {
@@ -205,25 +210,27 @@ jQuery(function() {
 
     // New list
     if ($('#id_new_list').val()) {
-      data['new_list'] = {};
-      data['new_list']['title'] = $('#id_new_list').val()
-      if ($('#id_private').is(':checked'))
-        data['new_list'].is_private = true
-      else
-        data['new_list'].is_private = false
+      data.new_list = {};
+      data.new_list.title = $('#id_new_list').val();
+      if ($('#id_private').is(':checked')) {
+        data.new_list.is_private = true;
+      }
+      else {
+        data.new_list.is_private = false;
+      }
     }
 
     
-    if (data['new_list']) {
+    if (data.new_list) {
       $.ajax({
         url: 'https://kippt.com/api/lists/',
         type: 'POST',
         dataType: 'json',
-        data: JSON.stringify(data['new_list'])
+        data: JSON.stringify(data.new_list)
       })
       .done(function(data){
         // Create clip with new list
-        data['list'] = data.id;
+        data.list = data.id;
         Kippt.postClip(data);
       })
       .fail(function(){
