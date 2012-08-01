@@ -135,7 +135,7 @@ jQuery(function() {
     $.getJSON("https://kippt.com/api/account/?include_data=services&disable_basic_auth=1")
     .done(function(data) {
       Kippt.profilePath = data.app_url;
-      Kippt.useriD = data.id;
+      Kippt.userId = data.id;
       localStorage.setItem('kipptUserId', data.id);
 
       $.each(data.services, function(name, connected) {
