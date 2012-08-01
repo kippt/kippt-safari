@@ -68,6 +68,8 @@
 			<string>All</string>
 		</dict>
 	</dict>
+	<key>Update Manifest URL</key>
+	<string>https://kippt.com/safari-extension.plist</string>
 	<key>Website</key>
 	<string>https://kippt.com</string>
 </dict>
