@@ -185,7 +185,6 @@ jQuery(function() {
     };
     
     if (Kippt.updateExisting) {
-      console.log('haz existing')
       data.id = Kippt.existingClip.id;
     }
 
