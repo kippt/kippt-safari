@@ -241,11 +241,6 @@ jQuery(function() {
     Kippt.openTab("https://kippt.com/inbox");
   });
 
-  $(document).on("change", "#kippt-actions input[type=checkbox]", function() {
-    var text = $(".share:checked").length ? "Save & share" : "Save";
-    $("#submit_clip").val(text);
-  });
-
   // Configure share tooltips
   $("#kippt-actions > div").tipsy({
     gravity: "sw",
