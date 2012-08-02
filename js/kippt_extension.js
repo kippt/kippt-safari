@@ -54,6 +54,7 @@ jQuery(function() {
   };
   
   Kippt.popover.clearUI = function() {
+    Kippt.previousUrl = false;
     $("#id_title").val("");
     $("#id_notes").val("");
     $("#id_is_read_later").removeAttr("checked");
