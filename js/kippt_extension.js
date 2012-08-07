@@ -258,12 +258,19 @@ jQuery(function() {
   $(document).on("click", "#open-profile", function() {
     if (Kippt.profilePath !== undefined) {
       Kippt.popover.openTab("https://kippt.com" + Kippt.profilePath);
+    } else {
+      Kippt.popover.openTab("https://kippt.com/profile/");
     }
   });
 
+  // Open feed page
+  $(document).on("click", "#open-kippt", function() {
+    Kippt.popover.openTab("https://kippt.com/");
+  });
+  
   // Open inbox page
   $(document).on("click", "#open-inbox", function() {
-    Kippt.popover.openTab("https://kippt.com/inbox");
+    Kippt.popover.openTab("https://kippt.com/inbox/");
   });
 
   $("#id_list").on("change", function(event) {
