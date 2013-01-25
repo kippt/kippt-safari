@@ -8,7 +8,7 @@ Thanks to [jcxplorer](https://github.com/jcxplorer) for the original implementat
 
 You can load the development version of the extension from Safari's extension builder.
 
-Official build is available at [https://kippt.com/downloads/kippt-safari.safariextz](https://kippt.com/downloads/kippt-safari.safariextz) (updated automatically)
+Official build is available at [http://addons.kippt.com.s3.amazonaws.com/safari/kippt-safari.safariextz](http://addons.kippt.com.s3.amazonaws.com/safari/kippt-safari.safariextz) (updated automatically)
 
 ## TODO
 
