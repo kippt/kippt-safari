@@ -14,3 +14,4 @@ Official build is available at [http://addons.kippt.com/safari/kippt-safari.safa
 
 1. Update version number to Info.plist
 2. Update manifest file for automatic updates
+  - Update both S3 and to Kippt
