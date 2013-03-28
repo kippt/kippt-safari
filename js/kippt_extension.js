@@ -209,6 +209,12 @@ jQuery(function() {
       share: services
     };
     
+    
+    // Read later
+    if ($('#id_is_read_later').is(':checked'))
+        data.is_read_later = true;
+    
+    
     if (Kippt.clip.updateExisting) {
       data.id = Kippt.existingClip.id;
     }

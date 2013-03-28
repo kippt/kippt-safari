@@ -8,9 +8,9 @@ Thanks to [jcxplorer](https://github.com/jcxplorer) for the original implementat
 
 You can load the development version of the extension from Safari's extension builder.
 
-Official build is available at [http://addons.kippt.com.s3.amazonaws.com/safari/kippt-safari.safariextz](http://addons.kippt.com.s3.amazonaws.com/safari/kippt-safari.safariextz) (updated automatically)
+Official build is available at [http://addons.kippt.com/safari/kippt-safari.safariextz](http://addons.kippt.com/safari/kippt-safari.safariextz) (updated automatically)
 
-## TODO
+## Distribution
 
-* Search for clips
-* Add keyboard shortcut (e.g. cmd+shift+k)
+1. Update version number to Info.plist
+2. Update manifest file for automatic updates
