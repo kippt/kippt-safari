@@ -57,7 +57,7 @@ jQuery(function() {
     Kippt.previousUrl = false;
     $("#id_title").val("");
     $("#id_notes").val("");
-    $("#id_is_read_later").removeAttr("checked");
+    $("#id_is_favorite").removeAttr("checked");
     $("#id_list").show();
     $("#new_list").hide();
     $("#id_new_list").val("");
@@ -66,6 +66,9 @@ jQuery(function() {
   
   Kippt.popover.saveClip = function(msg) {
     var type;
+    var isFavorite = msg['is_favorite'];
+    delete msg['is_favorite'];
+    
     if (!msg.id) {
       // Create new
       type = "POST";
@@ -82,11 +85,19 @@ jQuery(function() {
       dataType: "json",
       data: JSON.stringify(msg)
     })
-    .done(function(){
+    .done(function(data){
       // Clear page cache
       Kippt.popover.clearUI();
       localStorage.removeItem("cache-title");
       localStorage.removeItem("cache-notes");
+      // Set favorite if selected
+      if (isFavorite) {
+        $.ajax({
+          url:  'https://kippt.com' + data['resource_uri'] + 'favorite/',
+          type: 'POST',
+          dataType: 'json',
+        })
+      }
     })
     .fail(function(jqXHR, textStatus){
       alert( "Something went wrong when saving. Try again or contact hello@kippt.com");
@@ -210,9 +221,9 @@ jQuery(function() {
     };
     
     
-    // Read later
-    if ($('#id_is_read_later').is(':checked'))
-        data.is_read_later = true;
+    // Favorite
+    if ($('#id_is_favorite').is(':checked'))
+      data.is_favorite = true;
     
     
     if (Kippt.clip.updateExisting) {
